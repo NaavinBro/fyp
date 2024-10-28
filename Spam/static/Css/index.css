@@ -1,0 +1,165 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1f6062;
+}
+
+h1, h5 {
+    color: #333;
+}
+
+p {
+    color: #8a898d;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    padding: 15px;
+    box-shadow: 0px 4px 2px -2px gray;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover{
+    color: #078d48;
+}
+header nav ul li a.active {
+    color: #ffd700;
+}
+
+header .brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Main Content */
+.content {
+    padding: 40px 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.typ-content {
+    text-align: left;
+    color: #333;
+}
+
+.typ-content h1 {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.typ-content p {
+    font-size: 18px;
+}
+
+.form-content {
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: center;
+}
+
+.file-upload-form h1 {
+    font-size: 32px;
+    color: #333;
+}
+
+.file-upload-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.file-upload-form .check-holder {
+    text-align: center;
+}
+
+.check-btn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.check-btn:hover {
+    background-color: #2fe410;
+    color: black;
+}
+
+pre {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    background-color: #333;
+    padding: 10px 0;
+    color: #fff;
+    margin-top: 40px;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer p b {
+    color: #ffd700;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .typ-content, .form-content {
+        margin: 20px 0;
+        width: 100%;
+    }
+
+    .form-content {
+        padding: 20px;
+    }
+}

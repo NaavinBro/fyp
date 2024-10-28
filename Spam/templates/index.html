@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Spam/Css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="../static/Css/index.css">
+    <link rel="stylesheet" href="../static/Css/about.css">
+    <link rel="stylesheet" href="../static/Css/contactus.css">
+    <title>AITDS Detection</title>
+    <style>
+        /* General Styling */
+        body {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("../static/Images/bg-masthead.jpg");
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1f6062;
+            min-height: 100vh;
+        }
+
+        h1 {
+        font-family: "Varela Round", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-size: 2.5rem;  
+        letter-spacing: 0.5rem;
+        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+          background-clip: text;
+        margin:auto;
+        }
+
+        h5 {
+            color:rgba(255, 255, 255, 0.5) !important;
+            font-size: 20px;
+            margin: auto;
+        }
+
+        p {
+            color: #8a898d;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            padding: 15px;
+            box-shadow: 0px 4px 2px -2px gray;
+            background-color: transparent;
+        }
+
+        header nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        header nav ul li a:hover {
+            color: #005cb8d5;
+            text-decoration: none;
+        }
+
+        header nav ul li a.active {
+            color: #ffd700;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        header nav ul li a.active:hover {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        header .brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Align items in a column */
+            min-height: 80vh;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            width: 100%; /* Make it full width */
+        }
+
+        .typ-content {
+            text-align: center;
+            color: #333;
+        }
+
+        .typ-content h1 {
+            font-size: 90px;
+            font-weight: bold;
+        }
+
+        .typ-content p {
+            font-size: 18px;
+        }
+
+        .form-content {
+            background-color: transparent;
+            padding: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 10px; /* Add margin above the form */
+            width: 100%; /* Make the form content full width */
+            max-width: 400px; /* Limit max width for better aesthetics */
+        }
+
+        .file-upload-form h1 {
+            font-size: 32px;
+            color: #333;
+            background-color: transparent !important;
+            text-align: center;
+        }
+
+        /* Form alignment and style */
+        .file-upload-wrapper {
+            display: flex; /* Change to flex for proper alignment */
+            align-items: center; /* Vertically center-align items */
+            justify-content: center; /* Center horizontally */
+        }
+
+        .file-upload-wrapper input[type="file"] {
+            background-color: white;
+            height: 45px;
+            margin-bottom:0px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 70%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .check-btn {
+            height: 45px; /* Match the height of the file input */
+            padding: 10px 20px;
+            background-color:#64a19d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .check-btn:hover {
+            background-color: #4f837f;
+            color:white;
+        }
+
+        /* Style for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            max-width: 600px;
+            background-color: rgba(62, 60, 60, 0.7); /* Black background with transparency */
+            backdrop-filter: blur(10px); /* Adds the blur effect */
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            z-index: 1000; /* Ensure the modal is above the overlay */
+        }
+
+        .modal-content {
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+         /* Overlay for blur effect */
+        .overlay {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark transparent background */
+            backdrop-filter: blur(5px); /* Apply blur effect */
+            z-index: 999; /* Behind the modal */
+        }
+        
+        .text-container {
+            max-height: 300px;
+            max-width: 100%;
+            overflow-y: auto;
+            overflow-x: auto;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #333;
+        }
+
+        .close-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .close-btn {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 0.5rem 1em;
+            color: red;
+            background-color: white ;
+            border: 5px solid red;
+            border-radius: 5px;
+
+            /*transition-property: transform;
+            transition-duration: 0.3s;
+            transition-timing-function: ease;
+            transition-delay: 0s;*/
+
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            transform: translateY(-10px);
+            background-color: red;
+            color: white;
+        }
+
+        #resultText {
+            font-weight: bold; /* Make the text bold */
+            font-size: 1.5rem; /* Adjust font size */
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #333 !important;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .footer p b {
+            color: #ffd700;
+        }
+
+        @media screen and (max-width: 768px) {
+            .modal {
+                width: 90%;
+                padding: 15px;
+            }
+
+            .row {
+                flex-direction: column;
+            }
+
+            .typ-content,
+            .form-content {
+                margin: 20px 0;
+                width: 100%;
+            }
+
+            .form-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<section>
+    <!-- Header Start -->
+    <header>
+        <nav>
+            <div><a href="#" class="brand"><b>AITDS</b></a></div>
+            <ul>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'contactus' %}">Contact us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Header End -->
+
+    <!-- Main Content Start -->
+    <div class="fluid-container content">
+        <div class="row m-auto">
+            <!-- Text Section Start -->
+            <div class="col-md-6 p-5 m-auto typ-content">
+                <h1>Welcome to AITDS</h1>
+                <h5>[ AI Threat Detection System ]</h5>
+                <p>Created to detect phishing messages.</p>
+            </div>
+            <!-- Text Section End -->
+
+            <!-- Form Section Start -->
+            <div class="col-md-6 p-5 m-auto form-content">
+                <form class="file-upload-form" action="{% url 'upload' %}" method="POST" enctype="multipart/form-data" id="uploadForm">
+                    {% csrf_token %}
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="file" name="pdf_file" accept="application/pdf" required>
+                        <button class="check-btn" type="submit">Check</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Form Section End -->
+        </div>
+    </div>
+    <!-- Main Content End -->
+</section>
+
+  <!-- Footer Start -->
+  <div class="footer">
+    <p><b>AITDS</b> © 2024 All rights reserved.</p>
+  </div>
+  <!-- Footer End --> 
+
+<!-- Modal Start -->
+<div id="overlay" class="overlay"></div> <!-- Add overlay div here -->
+<div id="resultModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h2>AITDS Detection System</h2>
+        <strong>Result:</strong> <span id="resultText"></span><br><br>
+        <div class="text-container">
+            <pre id="extractedText"></pre>
+        </div>
+        <div class="close-btn-container">
+            <button id="closeModal" class="close-btn">Close</button>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->
+   
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#uploadForm').on('submit', function(event) {
+        event.preventDefault();  // Prevent form submission to allow AJAX handling
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // Log the response to inspect the values
+                console.log(response); 
+
+                // Set the result text using HTML
+                $('#resultText').html(response.result); // Assuming response.result contains the phishing detection status
+
+                // Set the color based on the phishing status
+                if (response.is_phishing) {
+                    $('#resultText').css('color', 'red'); // Example color for phishing
+                } else if (response.is_suspicious) {
+                    $('#resultText').css('color', 'yellow'); // Color for suspicious
+                } else {
+                    $('#resultText').css('color', 'aqua'); // Example color for not phishing
+                }
+
+                // Set the extracted text with HTML to preserve formatting
+                $('#extractedText').html(response.extracted_text);
+
+                // Show the modal and overlay
+                $('#overlay').fadeIn(); // Show overlay
+                $('#resultModal').fadeIn(); // Show modal
+            },
+            error: function() {
+                alert('Error occurred. Please try again.');
+            }
+        });
+    });
+
+    $('#closeModal').on('click', function() {
+        $('#overlay').fadeOut(); // Hide overlay
+        $('#resultModal').fadeOut(); // Hide modal
+    });
+</script>
+
+</body>
+</html>
